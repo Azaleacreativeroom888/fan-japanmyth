@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神代抄 | 日本神話ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F2E9D8;
+    --paper-deep: #E6D8B8;
+    --paper-line: #C9B387;
+    --ink: #251C14;
+    --ink-soft: #5B4A3A;
+    --red: #C7371D;
+    --red-deep: #7C1F13;
+    --gold: #A6812C;
+    --shadow: rgba(37, 28, 20, 0.18);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .brand{
+    font-family: "Shippori Mincho", serif;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+
+  img, svg{ display: block; max-width: 100%; }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    padding: 22px 0;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  header .wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .brand{
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .brand small{
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+  }
+  nav ul{
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.92rem;
+  }
+  nav a{
+    position: relative;
+    padding-bottom: 4px;
+  }
+  nav a.current{ color: var(--red-deep); }
+  nav a::after{
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  nav a:hover::after{ transform: scaleX(1); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position: relative;
+    padding: 76px 0 60px;
+    overflow: hidden;
+  }
+  .hero .wrap{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 20px;
+  }
+  .hero-copy{
+    animation: riseIn 0.9s ease both;
+  }
+  @keyframes riseIn{
+    from{ opacity: 0; transform: translateY(18px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  .hero-copy .kicker{
+    color: var(--red-deep);
+    font-size: 0.86rem;
+    letter-spacing: 0.14em;
+    margin: 0 0 14px;
+  }
+  .hero-copy h1{
+    font-size: clamp(2.2rem, 4.4vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.35;
+  }
+  .hero-copy h1 em{
+    font-style: normal;
+    color: var(--red);
+  }
+  .hero-copy p{
+    margin: 22px 0 30px;
+    max-width: 34em;
+    color: var(--ink-soft);
+  }
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 26px;
+    background: var(--red);
+    color: var(--paper);
+    border-radius: 2px;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 18px var(--shadow);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn:hover{ background: var(--red-deep); transform: translateY(-1px); }
+
+  .hero-figure{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    animation: riseIn 1.1s ease both;
+  }
+  .torii-vertical-label{
+    position: absolute;
+    top: 6%;
+    left: -6px;
+    writing-mode: vertical-rl;
+    font-family: "Shippori Mincho", serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.5em;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- intro ---------- */
+  .intro{
+    padding: 10px 0 70px;
+    text-align: center;
+  }
+  .intro .wrap{
+    max-width: 640px;
+  }
+  .intro h2{
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  .intro p{
+    color: var(--ink-soft);
+  }
+  .intro-mark{
+    width: 30px;
+    height: 30px;
+    margin: 0 auto 22px;
+    color: var(--red);
+  }
+
+  /* ---------- myth grid ---------- */
+  .myths{
+    padding: 60px 0 80px;
+    background: var(--paper-deep);
+    border-top: 1px solid var(--paper-line);
+    border-bottom: 1px solid var(--paper-line);
+  }
+  .section-head{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .section-head h2{
+    font-size: 1.7rem;
+  }
+  .section-head span{
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+  }
+
+  .myth-grid{
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 22px;
+  }
+  .myth-card{
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    padding: 30px;
+    position: relative;
+  }
+  .myth-card.large{
+    grid-row: span 2;
+    padding: 40px 34px;
+  }
+  .myth-card .torii-mini{
+    width: 34px;
+    height: 34px;
+    color: var(--red);
+    margin-bottom: 18px;
+  }
+  .myth-card h3{
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+  .myth-card.large h3{ font-size: 1.5rem; }
+  .myth-card p{
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  .myth-card .tag{
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 0.78rem;
+    color: var(--red-deep);
+    border-bottom: 1px solid var(--red-deep);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- log preview ---------- */
+  .log{
+    padding: 70px 0;
+  }
+  .log .section-head{ margin-bottom: 28px; }
+  .log-list{
+    border-top: 1px solid var(--paper-line);
+  }
+  .log-item{
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  .log-item time{
+    color: var(--red-deep);
+    font-size: 0.85rem;
+    font-family: "Shippori Mincho", serif;
+    padding-top: 2px;
+  }
+  .log-item p{
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  .log-more{
+    display: inline-block;
+    margin-top: 26px;
+    font-size: 0.9rem;
+    color: var(--red-deep);
+    border-bottom: 1px solid var(--red-deep);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 0 30px;
+  }
+  .footer-grid{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(242,233,216,0.18);
+  }
+  .footer-grid h3{
+    color: var(--paper);
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  .footer-grid p{
+    color: rgba(242,233,216,0.7);
+    font-size: 0.88rem;
+    max-width: 40em;
+  }
+  .contact-form{
+    display: grid;
+    gap: 12px;
+  }
+  .contact-form input,
+  .contact-form textarea{
+    width: 100%;
+    background: rgba(242,233,216,0.06);
+    border: 1px solid rgba(242,233,216,0.25);
+    color: var(--paper);
+    padding: 11px 13px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    border-radius: 2px;
+  }
+  .contact-form textarea{ resize: vertical; min-height: 90px; }
+  .contact-form button{
+    justify-self: start;
+    background: var(--red);
+    color: var(--paper);
+    border: none;
+    padding: 11px 24px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s ease;
+  }
+  .contact-form button:hover{ background: var(--red-deep); }
+
+  .footer-bottom{
+    padding-top: 26px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 0.78rem;
+    color: rgba(242,233,216,0.55);
+  }
+  .footer-bottom a{ color: rgba(242,233,216,0.75); }
+  .footer-bottom a:hover{ color: var(--paper); }
+  .footer-nav{
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 780px){
+    .hero .wrap{ grid-template-columns: 1fr; }
+    .hero-figure{ order: -1; max-width: 260px; margin: 0 auto; }
+    .myth-grid{ grid-template-columns: 1fr; }
+    .myth-card.large{ grid-row: auto; }
+    .footer-grid{ grid-template-columns: 1fr; gap: 34px; }
+    .log-item{ grid-template-columns: 90px 1fr; }
+    nav ul{ gap: 18px; font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="index.html" class="brand">神代抄<small>KAMIYO-SHO</small></a>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="current">トップ</a></li>
+        <li><a href="blog.html">学びの記録</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="about.html">このサイトについて</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="kicker">日本神話をゆっくり読み解くノート</p>
+      <h1>八百万の神々の<br><em>物語</em>を、ここから。</h1>
+      <p>『古事記』『日本書紀』に記された神々の物語を、自分のペースで学び直しています。読んだこと・調べたことの記録と、そこから生まれた漫画やイラストを、このサイトに少しずつ積み重ねていきます。</p>
+      <a href="#myths" class="btn">神々の物語を見る</a>
+    </div>
+    <div class="hero-figure">
+      <span class="torii-vertical-label">かむよのき</span>
+      <svg viewBox="0 0 320 340" width="320" height="340" role="img" aria-label="鳥居のイラスト">
+        <rect x="40" y="150" width="240" height="14" fill="var(--red-deep)"/>
+        <path d="M18 96 L302 96 L302 118 L292 118 L292 130 L28 130 L28 118 L18 118 Z" fill="var(--red)"/>
+        <path d="M10 70 Q160 30 310 70 L310 96 Q160 62 10 96 Z" fill="var(--red)"/>
+        <rect x="60" y="118" width="22" height="200" fill="var(--red)"/>
+        <rect x="238" y="118" width="22" height="200" fill="var(--red)"/>
+        <rect x="55" y="310" width="32" height="14" fill="var(--red-deep)"/>
+        <rect x="233" y="310" width="32" height="14" fill="var(--red-deep)"/>
+        <rect x="128" y="100" width="64" height="26" fill="var(--paper)" stroke="var(--gold)" stroke-width="2"/>
+        <text x="160" y="119" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="15" fill="var(--red-deep)">神代</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="wrap">
+    <svg class="intro-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M4 14 H36 V19 H4 Z" fill="var(--red)"/>
+      <path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="var(--red)"/>
+      <rect x="9" y="19" width="6" height="18" fill="var(--red)"/>
+      <rect x="25" y="19" width="6" height="18" fill="var(--red)"/>
+    </svg>
+    <h2>このサイトについて</h2>
+    <p>「知っているようで、実はちゃんと知らない」日本神話を、原文と現代語訳を照らし合わせながら少しずつ読み解いていく個人サイトです。学んだ内容の要約と、そこから着想を得た漫画・イラストを並行して公開しています。神話の解釈には諸説あるため、あくまで個人の学習記録としてお読みください。</p>
+  </div>
+</section>
+
+<section class="myths" id="myths">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>神々と物語</h2>
+      <span>読み解いてきた主な神話</span>
+    </div>
+    <div class="myth-grid">
+      <article class="myth-card large">
+        <svg class="torii-mini" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M4 14 H36 V19 H4 Z" fill="currentColor"/>
+          <path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/>
+          <rect x="9" y="19" width="6" height="18" fill="currentColor"/>
+          <rect x="25" y="19" width="6" height="18" fill="currentColor"/>
+        </svg>
+        <h3>三貴子の誕生</h3>
+        <p>黄泉の国から戻ったイザナギが禊を行った際に生まれた、アマテラス・ツクヨミ・スサノオの三柱。それぞれが治めることになった世界と、そこから続く物語のはじまりをまとめています。</p>
+        <span class="tag">読みごたえ：長め</span>
+      </article>
+      <article class="myth-card">
+        <svg class="torii-mini" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M4 14 H36 V19 H4 Z" fill="currentColor"/>
+          <path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/>
+          <rect x="9" y="19" width="6" height="18" fill="currentColor"/>
+          <rect x="25" y="19" width="6" height="18" fill="currentColor"/>
+        </svg>
+        <h3>国生みと神生み</h3>
+        <p>イザナギとイザナミが天沼矛で海をかき混ぜ、島々と神々を生み出していく国土創世の物語。</p>
+      </article>
+      <article class="myth-card">
+        <svg class="torii-mini" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M4 14 H36 V19 H4 Z" fill="currentColor"/>
+          <path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/>
+          <rect x="9" y="19" width="6" height="18" fill="currentColor"/>
+          <rect x="25" y="19" width="6" height="18" fill="currentColor"/>
+        </svg>
+        <h3>黄泉の国訪問</h3>
+        <p>亡きイザナミを追って黄泉の国へ向かったイザナギ。見てはいけないものを見てしまう、有名な場面です。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="log">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>学びの記録</h2>
+      <span>最近の更新</span>
+    </div>
+    <div class="log-list">
+      <div class="log-item">
+        <time>2026.09.02</time>
+        <p>『古事記』上巻、国生みの段を読了。地名の由来がそのまま神名になっている点が面白い。</p>
+      </div>
+      <div class="log-item">
+        <time>2026.08.27</time>
+        <p>三貴子の誕生シーンを整理。禊で生まれた神々の一覧を自分用にまとめた。</p>
+      </div>
+      <div class="log-item">
+        <time>2026.08.19</time>
+        <p>スサノオの高天原追放のくだり、感情の描かれ方が思ったより人間くさい。</p>
+      </div>
+    </div>
+    <a href="blog.html" class="log-more">記録をすべて見る</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h3>お問い合わせ</h3>
+        <p>誤字脱字のご指摘、感想などお気軽にどうぞ。</p>
+        <form class="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+          <input type="text" name="name" placeholder="お名前" required>
+          <input type="email" name="email" placeholder="メールアドレス" required>
+          <textarea name="message" placeholder="メッセージ" required></textarea>
+          <button type="submit">送信する</button>
+        </form>
+      </div>
+      <div>
+        <h3>このサイトについて</h3>
+        <p>本サイトの文章・イラスト・漫画は、生成AIの学習データとしての利用を禁止します。</p>
+        <p>本サイトは「Azalea Creative Room」の一部として運営しています。</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-nav">
+        <a href="index.html">トップ</a>
+        <a href="blog.html">学びの記録</a>
+        <a href="gallery.html">ギャラリー</a>
+        <a href="about.html">このサイトについて</a>
+      </div>
+      <span>&copy; 2026 神代抄 / Azalea Creative Room</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
