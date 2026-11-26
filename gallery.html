@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ギャラリー | 神代抄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F2E9D8;
+    --paper-deep: #E6D8B8;
+    --paper-line: #C9B387;
+    --ink: #251C14;
+    --ink-soft: #5B4A3A;
+    --red: #C7371D;
+    --red-deep: #7C1F13;
+    --gold: #A6812C;
+    --shadow: rgba(37, 28, 20, 0.18);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .brand{
+    font-family: "Shippori Mincho", serif;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+  img, svg{ display: block; max-width: 100%; }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    padding: 22px 0;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  header .wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .brand{
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .brand small{
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+  }
+  nav ul{
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.92rem;
+  }
+  nav a{
+    position: relative;
+    padding-bottom: 4px;
+  }
+  nav a.current{ color: var(--red-deep); }
+  nav a::after{
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  nav a:hover::after{ transform: scaleX(1); }
+
+  /* ---------- page head ---------- */
+  .page-head{
+    padding: 60px 0 30px;
+    text-align: center;
+  }
+  .page-head .torii-mark{
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 20px;
+    color: var(--red);
+  }
+  .page-head h1{
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    font-weight: 800;
+  }
+  .page-head p{
+    margin: 16px auto 0;
+    max-width: 32em;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  /* ---------- filter ---------- */
+  .filter{
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 0 40px;
+    flex-wrap: wrap;
+  }
+  .filter button{
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 9px 24px;
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--paper-line);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .filter button:hover{ border-color: var(--red); color: var(--red-deep); }
+  .filter button.active{
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--paper);
+  }
+
+  /* ---------- grid ---------- */
+  .gallery{
+    padding: 0 0 90px;
+  }
+  .grid{
+    columns: 3;
+    column-gap: 22px;
+  }
+  .work{
+    break-inside: avoid;
+    margin: 0 0 22px;
+    cursor: pointer;
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    padding: 12px 12px 16px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .work:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px var(--shadow);
+  }
+  .work.hidden{ display: none; }
+
+  .thumb{
+    position: relative;
+    width: 100%;
+    background: var(--paper-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper-line);
+    overflow: hidden;
+  }
+  .thumb.r-tall{ aspect-ratio: 3 / 4; }
+  .thumb.r-wide{ aspect-ratio: 4 / 3; }
+  .thumb.r-square{ aspect-ratio: 1 / 1; }
+  .thumb svg{ width: 44px; height: 44px; }
+  .thumb img{ width: 100%; height: 100%; object-fit: cover; }
+
+  .work-meta{
+    padding: 14px 4px 0;
+  }
+  .work-meta .kind{
+    font-size: 0.74rem;
+    color: var(--red-deep);
+    border-bottom: 1px solid var(--red-deep);
+    padding-bottom: 1px;
+  }
+  .work-meta h3{
+    font-size: 1.05rem;
+    margin-top: 10px;
+    font-weight: 700;
+  }
+  .work-meta time{
+    display: block;
+    margin-top: 2px;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position: fixed;
+    inset: 0;
+    background: rgba(37, 28, 20, 0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 50;
+  }
+  .lightbox.open{ display: flex; }
+  .lightbox-inner{
+    background: var(--paper);
+    max-width: 560px;
+    width: 100%;
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 18px 18px 24px;
+    position: relative;
+  }
+  .lightbox-inner .thumb{ margin-bottom: 18px; }
+  .lightbox-inner h3{ font-size: 1.3rem; }
+  .lightbox-inner .lb-kind{
+    font-size: 0.78rem;
+    color: var(--red-deep);
+  }
+  .lightbox-inner p{
+    margin: 10px 0 0;
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+  }
+  .lb-close{
+    position: absolute;
+    top: 8px; right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: var(--ink);
+    cursor: pointer;
+    line-height: 1;
+    z-index: 2;
+    text-shadow: 0 0 6px var(--paper);
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 0 30px;
+  }
+  .footer-grid{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(242,233,216,0.18);
+  }
+  .footer-grid h3{
+    color: var(--paper);
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  .footer-grid p{
+    color: rgba(242,233,216,0.7);
+    font-size: 0.88rem;
+    max-width: 40em;
+  }
+  .contact-form{
+    display: grid;
+    gap: 12px;
+  }
+  .contact-form input,
+  .contact-form textarea{
+    width: 100%;
+    background: rgba(242,233,216,0.06);
+    border: 1px solid rgba(242,233,216,0.25);
+    color: var(--paper);
+    padding: 11px 13px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    border-radius: 2px;
+  }
+  .contact-form textarea{ resize: vertical; min-height: 90px; }
+  .contact-form button{
+    justify-self: start;
+    background: var(--red);
+    color: var(--paper);
+    border: none;
+    padding: 11px 24px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s ease;
+  }
+  .contact-form button:hover{ background: var(--red-deep); }
+
+  .footer-bottom{
+    padding-top: 26px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 0.78rem;
+    color: rgba(242,233,216,0.55);
+  }
+  .footer-bottom a{ color: rgba(242,233,216,0.75); }
+  .footer-bottom a:hover{ color: var(--paper); }
+  .footer-nav{
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 860px){
+    .grid{ columns: 2; }
+  }
+  @media (max-width: 780px){
+    nav ul{ gap: 18px; font-size: 0.85rem; }
+    .footer-grid{ grid-template-columns: 1fr; gap: 34px; }
+  }
+  @media (max-width: 520px){
+    .grid{ columns: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="index.html" class="brand">神代抄<small>KAMIYO-SHO</small></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">トップ</a></li>
+        <li><a href="blog.html">学びの記録</a></li>
+        <li><a href="gallery.html" class="current">ギャラリー</a></li>
+        <li><a href="about.html">このサイトについて</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <svg class="torii-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M4 14 H36 V19 H4 Z" fill="currentColor"/>
+      <path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/>
+      <rect x="9" y="19" width="6" height="18" fill="currentColor"/>
+      <rect x="25" y="19" width="6" height="18" fill="currentColor"/>
+    </svg>
+    <h1>ギャラリー</h1>
+    <p>日本神話を読んで描いた漫画とイラストをまとめています。作品をクリックすると大きく表示されます。</p>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+
+    <div class="filter" role="group" aria-label="作品の絞り込み">
+      <button class="active" data-filter="all">すべて</button>
+      <button data-filter="manga">漫画</button>
+      <button data-filter="illust">イラスト</button>
+    </div>
+
+    <div class="grid" id="grid">
+
+      <!-- 作品を追加するときは、この article を1つコピーして使います。
+           .thumb の中の svg を削除して <img src="画像のパス" alt="作品名"> に差し替えてください。
+           縦長: r-tall / 横長: r-wide / 正方形: r-square -->
+
+      <article class="work" data-kind="illust" data-title="アマテラスと岩戸" data-label="イラスト" data-date="2026.09" data-desc="天岩戸に隠れたアマテラスを描いたイラスト。ここに作品の説明を書きます。">
+        <div class="thumb r-tall">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 14 H36 V19 H4 Z" fill="currentColor"/><path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/><rect x="9" y="19" width="6" height="18" fill="currentColor"/><rect x="25" y="19" width="6" height="18" fill="currentColor"/></svg>
+        </div>
+        <div class="work-meta">
+          <span class="kind">イラスト</span>
+          <h3>アマテラスと岩戸</h3>
+          <time>2026.09</time>
+        </div>
+      </article>
+
+      <article class="work" data-kind="manga" data-title="国生みの四コマ" data-label="漫画" data-date="2026.09" data-desc="国生みの場面を四コマにまとめた漫画。ここに作品の説明を書きます。">
+        <div class="thumb r-square">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 14 H36 V19 H4 Z" fill="currentColor"/><path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/><rect x="9" y="19" width="6" height="18" fill="currentColor"/><rect x="25" y="19" width="6" height="18" fill="currentColor"/></svg>
+        </div>
+        <div class="work-meta">
+          <span class="kind">漫画</span>
+          <h3>国生みの四コマ</h3>
+          <time>2026.09</time>
+        </div>
+      </article>
+
+      <article class="work" data-kind="illust" data-title="スサノオ" data-label="イラスト" data-date="2026.08" data-desc="荒ぶる神スサノオのイラスト。ここに作品の説明を書きます。">
+        <div class="thumb r-wide">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 14 H36 V19 H4 Z" fill="currentColor"/><path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/><rect x="9" y="19" width="6" height="18" fill="currentColor"/><rect x="25" y="19" width="6" height="18" fill="currentColor"/></svg>
+        </div>
+        <div class="work-meta">
+          <span class="kind">イラスト</span>
+          <h3>スサノオ</h3>
+          <time>2026.08</time>
+        </div>
+      </article>
+
+      <article class="work" data-kind="manga" data-title="黄泉の国（前編）" data-label="漫画" data-date="2026.08" data-desc="イザナギの黄泉の国訪問を描いた漫画の前編。ここに作品の説明を書きます。">
+        <div class="thumb r-tall">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 14 H36 V19 H4 Z" fill="currentColor"/><path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/><rect x="9" y="19" width="6" height="18" fill="currentColor"/><rect x="25" y="19" width="6" height="18" fill="currentColor"/></svg>
+        </div>
+        <div class="work-meta">
+          <span class="kind">漫画</span>
+          <h3>黄泉の国（前編）</h3>
+          <time>2026.08</time>
+        </div>
+      </article>
+
+      <article class="work" data-kind="illust" data-title="ツクヨミ" data-label="イラスト" data-date="2026.08" data-desc="夜を治める神ツクヨミのイラスト。ここに作品の説明を書きます。">
+        <div class="thumb r-square">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 14 H36 V19 H4 Z" fill="currentColor"/><path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/><rect x="9" y="19" width="6" height="18" fill="currentColor"/><rect x="25" y="19" width="6" height="18" fill="currentColor"/></svg>
+        </div>
+        <div class="work-meta">
+          <span class="kind">イラスト</span>
+          <h3>ツクヨミ</h3>
+          <time>2026.08</time>
+        </div>
+      </article>
+
+      <article class="work" data-kind="manga" data-title="三貴子のはなし" data-label="漫画" data-date="2026.07" data-desc="三貴子の誕生をやさしくまとめた漫画。ここに作品の説明を書きます。">
+        <div class="thumb r-wide">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 14 H36 V19 H4 Z" fill="currentColor"/><path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/><rect x="9" y="19" width="6" height="18" fill="currentColor"/><rect x="25" y="19" width="6" height="18" fill="currentColor"/></svg>
+        </div>
+        <div class="work-meta">
+          <span class="kind">漫画</span>
+          <h3>三貴子のはなし</h3>
+          <time>2026.07</time>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox-inner">
+    <button class="lb-close" id="lbClose" aria-label="閉じる">&times;</button>
+    <div class="thumb r-square" id="lbThumb"></div>
+    <span class="lb-kind" id="lbKind"></span>
+    <h3 id="lbTitle"></h3>
+    <p id="lbDesc"></p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h3>お問い合わせ</h3>
+        <p>誤字脱字のご指摘、感想などお気軽にどうぞ。</p>
+        <form class="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+          <input type="text" name="name" placeholder="お名前" required>
+          <input type="email" name="email" placeholder="メールアドレス" required>
+          <textarea name="message" placeholder="メッセージ" required></textarea>
+          <button type="submit">送信する</button>
+        </form>
+      </div>
+      <div>
+        <h3>このサイトについて</h3>
+        <p>本サイトの文章・イラスト・漫画は、生成AIの学習データとしての利用を禁止します。</p>
+        <p>本サイトは「Azalea Creative Room」の一部として運営しています。</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-nav">
+        <a href="index.html">トップ</a>
+        <a href="blog.html">学びの記録</a>
+        <a href="gallery.html">ギャラリー</a>
+        <a href="about.html">このサイトについて</a>
+      </div>
+      <span>&copy; 2026 神代抄 / Azalea Creative Room</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 絞り込み
+  var buttons = document.querySelectorAll('.filter button');
+  var works = document.querySelectorAll('.work');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      buttons.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.dataset.filter;
+      works.forEach(function(w){
+        w.classList.toggle('hidden', f !== 'all' && w.dataset.kind !== f);
+      });
+    });
+  });
+
+  // ライトボックス
+  var lb = document.getElementById('lightbox');
+  var lbThumb = document.getElementById('lbThumb');
+  works.forEach(function(w){
+    w.addEventListener('click', function(){
+      var thumb = w.querySelector('.thumb');
+      lbThumb.className = thumb.className;
+      lbThumb.innerHTML = thumb.innerHTML;
+      document.getElementById('lbKind').textContent = w.dataset.label + '　' + w.dataset.date;
+      document.getElementById('lbTitle').textContent = w.dataset.title;
+      document.getElementById('lbDesc').textContent = w.dataset.desc;
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+    });
+  });
+  function closeLb(){
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+  }
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLb(); });
+</script>
+
+</body>
+</html>
