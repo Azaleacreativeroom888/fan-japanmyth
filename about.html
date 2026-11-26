@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>このサイトについて | 神代抄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F2E9D8;
+    --paper-deep: #E6D8B8;
+    --paper-line: #C9B387;
+    --ink: #251C14;
+    --ink-soft: #5B4A3A;
+    --red: #C7371D;
+    --red-deep: #7C1F13;
+    --gold: #A6812C;
+    --shadow: rgba(37, 28, 20, 0.18);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .brand{
+    font-family: "Shippori Mincho", serif;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+  img, svg{ display: block; max-width: 100%; }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    padding: 22px 0;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  header .wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .brand{
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .brand small{
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+  }
+  nav ul{
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.92rem;
+  }
+  nav a{
+    position: relative;
+    padding-bottom: 4px;
+  }
+  nav a.current{ color: var(--red-deep); }
+  nav a::after{
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  nav a:hover::after{ transform: scaleX(1); }
+
+  /* ---------- page head ---------- */
+  .page-head{
+    padding: 60px 0 30px;
+    text-align: center;
+  }
+  .page-head .torii-mark{
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 20px;
+    color: var(--red);
+  }
+  .page-head h1{
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    font-weight: 800;
+  }
+  .page-head p{
+    margin: 16px auto 0;
+    max-width: 32em;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  /* ---------- main ---------- */
+  main{
+    padding: 20px 0 90px;
+  }
+  main .wrap{
+    max-width: 860px;
+  }
+
+  .section-title{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 44px 0 20px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--red-deep);
+  }
+  .section-title:first-child{ margin-top: 0; }
+  .section-title::after{
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--paper-line);
+  }
+
+  /* ---------- link cards ---------- */
+  .link-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  .link-card{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .link-card::before{
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--red);
+  }
+  .link-card:hover{
+    transform: translateY(-2px);
+    border-color: var(--red);
+    box-shadow: 0 10px 20px var(--shadow);
+  }
+  .link-mark{
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--red);
+    color: var(--paper);
+    font-family: "Shippori Mincho", serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+  .link-text{ flex: 1; min-width: 0; }
+  .link-name{
+    display: block;
+    font-family: "Shippori Mincho", serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .link-desc{
+    display: block;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-top: 2px;
+  }
+  .link-arrow{
+    color: var(--paper-line);
+    font-size: 1.3rem;
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+  .link-card:hover .link-arrow{
+    color: var(--red);
+    transform: translateX(3px);
+  }
+
+  /* ---------- form ---------- */
+  .form-card{
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    padding: 30px 32px;
+    position: relative;
+  }
+  .form-card::before{
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--red);
+  }
+  .form-intro{
+    margin: 0 0 24px;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .form-group{ margin-bottom: 20px; }
+  .form-label{
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .required{ color: var(--red); }
+  .form-input,
+  .form-textarea{
+    width: 100%;
+    background: #FBF6EA;
+    border: 1px solid var(--paper-line);
+    border-radius: 2px;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder{ color: #A8977C; }
+  .form-input:focus,
+  .form-textarea:focus{
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(199, 55, 29, 0.12);
+  }
+  .form-textarea{ resize: vertical; min-height: 150px; }
+  .field-error{
+    display: block;
+    font-size: 0.78rem;
+    color: var(--red);
+    margin-top: 4px;
+  }
+  .form-submit{
+    background: var(--red);
+    color: var(--paper);
+    border: none;
+    border-radius: 2px;
+    padding: 13px 32px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 8px 18px var(--shadow);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .form-submit:hover{ background: var(--red-deep); transform: translateY(-1px); }
+  .form-submit:disabled{ opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .form-success{
+    background: #EAF0DA;
+    border: 1px solid #A9B97A;
+    padding: 16px 20px;
+    text-align: center;
+    color: #3F4D1E;
+    font-size: 0.92rem;
+    margin-bottom: 20px;
+  }
+  .form-error-global{
+    background: #F6DDD6;
+    border: 1px solid var(--red);
+    padding: 12px 16px;
+    color: var(--red-deep);
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+
+  .back-link{
+    display: inline-block;
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: var(--red-deep);
+    border-bottom: 1px solid var(--red-deep);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--paper);
+    padding: 44px 0 28px;
+  }
+  .notice{
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(242,233,216,0.18);
+  }
+  .notice p{
+    margin: 0 0 10px;
+    max-width: 52em;
+    font-size: 0.8rem;
+    line-height: 1.9;
+    color: rgba(242,233,216,0.7);
+  }
+  .footer-bottom{
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 0.78rem;
+    color: rgba(242,233,216,0.55);
+  }
+  .footer-bottom a{ color: rgba(242,233,216,0.75); }
+  .footer-bottom a:hover{ color: var(--paper); }
+  .footer-nav{
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 780px){
+    nav ul{ gap: 18px; font-size: 0.85rem; }
+    .link-grid{ grid-template-columns: 1fr; }
+    .form-card{ padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="index.html" class="brand">神代抄<small>KAMIYO-SHO</small></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">トップ</a></li>
+        <li><a href="blog.html">学びの記録</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="about.html" class="current">このサイトについて</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <svg class="torii-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M4 14 H36 V19 H4 Z" fill="currentColor"/>
+      <path d="M2 6 Q20 0 38 6 V14 Q20 8 2 14 Z" fill="currentColor"/>
+      <rect x="9" y="19" width="6" height="18" fill="currentColor"/>
+      <rect x="25" y="19" width="6" height="18" fill="currentColor"/>
+    </svg>
+    <h1>このサイトについて</h1>
+    <p>日本神話の学習記録と、そこから生まれた漫画・イラストをまとめた個人サイトです。ご連絡は下のSNSかフォームからお願いします。</p>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+
+    <h2 class="section-title">漫画・イラスト掲載サイト</h2>
+    <div class="link-grid">
+      <a class="link-card" href="https://rookie.shonenjump.com/users/14728546961183734555" target="_blank" rel="noopener">
+        <div class="link-mark">漫</div>
+        <div class="link-text">
+          <span class="link-name">ジャンプルーキー</span>
+          <span class="link-desc">オリジナル漫画を掲載中</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://www.pixiv.net/users/105728284" target="_blank" rel="noopener">
+        <div class="link-mark">絵</div>
+        <div class="link-text">
+          <span class="link-name">Pixiv</span>
+          <span class="link-desc">二次創作はこちらに掲載</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+    </div>
+
+    <h2 class="section-title">SNS・その他</h2>
+    <div class="link-grid">
+      <a class="link-card" href="https://bsky.app/profile/azaleaazalea88.bsky.social" target="_blank" rel="noopener">
+        <div class="link-mark">空</div>
+        <div class="link-text">
+          <span class="link-name">Bluesky</span>
+          <span class="link-desc">近況・作品のお知らせ</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://www.youtube.com/@LilyPopins0512" target="_blank" rel="noopener">
+        <div class="link-mark">動</div>
+        <div class="link-text">
+          <span class="link-name">YouTube（リリポピ）</span>
+          <span class="link-desc">動画チャンネル</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://lilipopi.github.io/lilypopins/" target="_blank" rel="noopener">
+        <div class="link-mark">花</div>
+        <div class="link-text">
+          <span class="link-name">リリポピのホームページ</span>
+          <span class="link-desc">別サイト</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+    </div>
+
+    <h2 class="section-title">Azalea72のホームページ</h2>
+    <div class="link-grid">
+      <a class="link-card" href="https://azaleacreativeroom888.github.io/storyreviewazalea/" target="_blank" rel="noopener">
+        <div class="link-mark">書</div>
+        <div class="link-text">
+          <span class="link-name">書評サイト</span>
+          <span class="link-desc">本・アニメ・映画・ゲーム・小説の備忘録</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://azaleacreativeroom888.github.io/fan-english/" target="_blank" rel="noopener">
+        <div class="link-mark">英</div>
+        <div class="link-text">
+          <span class="link-name">英語サイト（English Site）</span>
+          <span class="link-desc">英語話者と英語学習者に向けたサイト</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://azaleacreativeroom888.github.io/fan-watercolor/" target="_blank" rel="noopener">
+        <div class="link-mark">彩</div>
+        <div class="link-text">
+          <span class="link-name">水彩画サイト</span>
+          <span class="link-desc">水彩画掲載</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+    </div>
+
+    <h2 class="section-title">お問い合わせフォーム</h2>
+    <div class="form-card">
+      <p class="form-intro">ご質問・ご感想などはこちらからどうぞ。<br>Gmailで受け取り、返信いたします。</p>
+
+      <div data-fs-success class="form-success" style="display:none;">
+        メッセージを送信しました。ありがとうございます！
+      </div>
+      <div data-fs-error class="form-error-global" style="display:none;"></div>
+
+      <form id="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="name">お名前</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="お名前">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">メールアドレス <span class="required">*</span></label>
+          <input class="form-input" type="email" id="email" name="email" data-fs-field placeholder="example@email.com" required>
+          <span data-fs-error="email" class="field-error"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">メッセージ <span class="required">*</span></label>
+          <textarea class="form-textarea" id="message" name="message" data-fs-field placeholder="メッセージを入力してください" rows="6" required></textarea>
+          <span data-fs-error="message" class="field-error"></span>
+        </div>
+        <button class="form-submit" type="submit" data-fs-submit-btn>送信する</button>
+      </form>
+    </div>
+
+    <a class="back-link" href="index.html">トップページに戻る</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="notice">
+      <p>当サイトに掲載されている画像・文章・作品について、AI学習への利用、トレース（トレパク）、無断転載・転載、二次利用を禁止します。スクリーンショットの転載・無断引用はご遠慮ください。</p>
+      <p>Please refrain from using any images, text, or works on this website for AI training, tracing, unauthorized reproduction, redistribution, or secondary use.</p>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-nav">
+        <a href="index.html">トップ</a>
+        <a href="blog.html">学びの記録</a>
+        <a href="gallery.html">ギャラリー</a>
+        <a href="about.html">このサイトについて</a>
+      </div>
+      <span>&copy; 2026 神代抄 / Azalea Creative Room</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contact-form', formId: 'maqvpvoz' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>
